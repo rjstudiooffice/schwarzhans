@@ -225,6 +225,8 @@ footer{background:var(--black2);padding:22px 52px;border-top:1px solid var(--bor
   .hero-content{left:20px;bottom:120px;}
   .slide-dots{left:20px;}.slide-num{right:20px;}
   .l-grid{grid-template-columns:1fr 1fr;grid-template-rows:auto;}
+  .l-img{filter:brightness(0.6) saturate(0.85)!important;}
+  .l-item{min-height:180px!important;}
   .l-item:nth-child(n){grid-column:auto!important;grid-row:auto!important;}
   .l-extra{flex-wrap:wrap;}
   .fakten{grid-template-columns:1fr 1fr;padding:52px 20px;}
@@ -236,8 +238,8 @@ footer{background:var(--black2);padding:22px 52px;border-top:1px solid var(--bor
 }
 @media(max-width:600px){
   .l-grid{grid-template-columns:1fr;}
+  .l-item{min-height:220px!important;}
   .l-item:nth-child(n){grid-column:1!important;grid-row:auto!important;}
-  .l-extra{flex-direction:column;}
   .hero-ctas{flex-direction:column;}
   .form-row{grid-template-columns:1fr;}
   .fakten{grid-template-columns:1fr 1fr;}
@@ -267,10 +269,10 @@ footer{background:var(--black2);padding:22px 52px;border-top:1px solid var(--bor
 <section class="hero" id="hero">
   <div class="hero-topline"></div>
   <div class="slides" id="slides">
-    <div class="slide active"><img src="1.png" alt="" class="slide-img"></div>
-    <div class="slide"><img src="2.png" alt="" class="slide-img"></div>
-    <div class="slide"><img src="3.png" alt="" class="slide-img"></div>
-    <div class="slide"><img src="4.png" alt="" class="slide-img"></div>
+    <div class="slide active"><img src="1.png" alt="" class="slide-img" style="object-position:80% center;"></div>
+    <div class="slide"><img src="2.png" alt="" class="slide-img" style="object-position:75% center;"></div>
+    <div class="slide"><img src="3.png" alt="" class="slide-img" style="object-position:65% center;"></div>
+    <div class="slide"><img src="4.png" alt="" class="slide-img" style="object-position:70% center;"></div>
   </div>
   <div class="hero-grad"></div>
   <div class="hero-grad2"></div>
