@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Transporte Schwarzhans · Erdbau · Spezialtiefbau · Arlberg</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --black:#050505;
+  --black2:#0d0d0d;
+  --black3:#161616;
+  --black4:#1f1f1f;
+  --red:#be1a1a;
+  --red2:#d92020;
+  --red-dim:rgba(190,26,26,0.12);
+  --red-border:rgba(190,26,26,0.25);
+  --orange:#be1a1a;
+  --white:#f0efed;
+  --white2:rgba(240,239,237,0.6);
+  --white3:rgba(240,239,237,0.1);
+  --border:rgba(240,239,237,0.07);
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--black);color:var(--white);font-family:'Barlow',sans-serif;font-weight:300;overflow-x:hidden;cursor:default;}
+ 
+/* ── NAV ── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:300;
+  height:68px;display:flex;align-items:center;justify-content:space-between;
+  padding:0 52px;background:rgba(5,5,5,0);
+  transition:background 0.5s,border-color 0.5s,padding 0.4s;
+  border-bottom:1px solid transparent;
+}
+nav.solid{background:rgba(5,5,5,0.97);backdrop-filter:blur(16px);border-color:var(--border);padding-top:0;padding-bottom:0;}
+.nav-logo{font-family:'Barlow Condensed',sans-serif;font-size:19px;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;color:var(--white);text-decoration:none;opacity:0;animation:fadeIn 0.8s 0.2s forwards;}
+.nav-logo span{color:var(--red);}
+.nav-r{display:flex;align-items:center;gap:28px;opacity:0;animation:fadeIn 0.8s 0.4s forwards;}
+.nav-r a{font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:var(--white2);text-decoration:none;transition:color 0.25s;}
+.nav-r a:hover{color:var(--white);}
+.nav-call{background:var(--red)!important;color:var(--white)!important;padding:9px 22px;font-weight:600!important;transition:background 0.25s!important;}
+.nav-call:hover{background:var(--red2)!important;color:var(--white)!important;}
+.burger{display:none;background:none;border:none;cursor:pointer;flex-direction:column;gap:5px;padding:4px;}
+.burger span{width:22px;height:2px;background:var(--white);display:block;transition:all 0.3s;}
+.burger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+.burger.open span:nth-child(2){opacity:0;}
+.burger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+.mob-menu{position:fixed;inset:0;background:var(--black2);z-index:290;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:28px;transform:translateX(100%);transition:transform 0.45s cubic-bezier(0.4,0,0.2,1);}
+.mob-menu.open{transform:translateX(0);}
+.mob-menu a{font-family:'Barlow Condensed',sans-serif;font-size:42px;font-weight:900;letter-spacing:0.08em;text-transform:uppercase;color:rgba(240,239,237,0.4);text-decoration:none;transition:color 0.25s;}
+.mob-menu a:hover{color:var(--white);}
+.mob-menu .mob-cta{color:var(--red);}
+ 
+/* ── HERO ── */
+.hero{position:relative;height:100vh;min-height:600px;overflow:hidden;}
+ 
+/* red accent line top */
+.hero-topline{position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(to right,transparent 0%,var(--red) 20%,var(--red2) 50%,var(--red) 80%,transparent 100%);z-index:10;animation:topline 4s ease-in-out infinite;}
+@keyframes topline{0%,100%{opacity:0.7;}50%{opacity:1;filter:drop-shadow(0 0 8px var(--red));}}
+ 
+.slides{position:absolute;inset:0;}
+.slide{position:absolute;inset:0;opacity:0;transition:opacity 1.4s ease-in-out;}
+.slide.active{opacity:1;}
+.slide-img{width:100%;height:100%;object-fit:cover;transform:scale(1.06);transition:transform 9s ease-out;}
+.slide.active .slide-img{transform:scale(1);}
+.slide-ph{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:10px;letter-spacing:0.3em;text-transform:uppercase;color:rgba(255,255,255,0.12);}
+.s1{background:#100505;}.s2{background:#080808;}.s3{background:#050a05;}.s4{background:#050508;}
+ 
+.hero-grad{position:absolute;inset:0;background:linear-gradient(to top,rgba(5,5,5,0.95) 0%,rgba(5,5,5,0.35) 45%,rgba(5,5,5,0.05) 100%);z-index:2;}
+.hero-grad2{position:absolute;inset:0;background:linear-gradient(100deg,rgba(5,5,5,0.65) 0%,transparent 55%);z-index:2;}
+ 
+/* diagonal red edge */
+.hero-diag{position:absolute;bottom:0;right:0;width:0;height:0;border-style:solid;border-width:0 0 120px 100vw;border-color:transparent transparent var(--black) transparent;z-index:3;}
+ 
+.hero-content{position:absolute;bottom:140px;left:52px;z-index:5;max-width:min(90vw,800px);}
+.hero-eyebrow{font-size:10px;letter-spacing:0.5em;text-transform:uppercase;color:var(--red);margin-bottom:18px;display:flex;align-items:center;gap:12px;opacity:0;animation:slideUp 0.7s 0.4s forwards;}
+.hero-eyebrow::before{content:'';width:28px;height:2px;background:var(--red);}
+ 
+.hero-h1{font-family:'Barlow Condensed',sans-serif;font-size:clamp(60px,11vw,130px);font-weight:900;line-height:0.87;text-transform:uppercase;letter-spacing:0.01em;color:var(--white);margin-bottom:22px;}
+.hero-h1 .l1{display:block;opacity:0;animation:slideUp 0.7s 0.55s forwards;}
+.hero-h1 .l2{display:block;opacity:0;animation:slideUp 0.7s 0.7s forwards;}
+.hero-h1 .l2 em{font-style:normal;color:var(--red);}
+.hero-sub{font-size:clamp(13px,1.7vw,16px);color:var(--white2);line-height:1.75;max-width:500px;margin-bottom:36px;opacity:0;animation:slideUp 0.7s 0.85s forwards;}
+.hero-ctas{display:flex;gap:10px;flex-wrap:wrap;opacity:0;animation:slideUp 0.7s 1s forwards;}
+ 
+.btn-red{background:var(--red);color:var(--white);text-decoration:none;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;padding:15px 36px;transition:background 0.25s;display:inline-block;position:relative;overflow:hidden;}
+.btn-red::before{content:'';position:absolute;inset:0;background:var(--red2);transform:scaleX(0);transform-origin:left;transition:transform 0.3s;}
+.btn-red:hover::before{transform:scaleX(1);}
+.btn-red span{position:relative;z-index:1;}
+ 
+.btn-border{border:1px solid rgba(240,239,237,0.2);color:var(--white);text-decoration:none;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;padding:15px 36px;transition:all 0.25s;display:inline-block;}
+.btn-border:hover{border-color:var(--white);background:rgba(240,239,237,0.06);}
+ 
+/* slide controls */
+.slide-dots{position:absolute;bottom:48px;left:52px;z-index:5;display:flex;gap:6px;opacity:0;animation:fadeIn 1s 1.2s forwards;}
+.dot{width:32px;height:2px;background:rgba(240,239,237,0.2);cursor:pointer;transition:all 0.35s;}
+.dot.active{background:var(--red);width:52px;}
+.slide-num{position:absolute;bottom:44px;right:52px;z-index:5;font-family:'Barlow Condensed',sans-serif;font-size:14px;letter-spacing:0.2em;color:rgba(240,239,237,0.25);opacity:0;animation:fadeIn 1s 1.2s forwards;}
+.slide-num b{font-size:22px;color:var(--white);font-weight:700;}
+ 
+/* ── MARQUEE ── */
+.marquee-wrap{background:var(--red);overflow:hidden;padding:11px 0;position:relative;z-index:4;}
+.marquee-track{display:flex;animation:marquee 22s linear infinite;}
+.marquee-track:hover{animation-play-state:paused;}
+.mi{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:0.3em;text-transform:uppercase;color:rgba(5,5,5,0.8);white-space:nowrap;padding:0 20px;}
+.ms{color:rgba(5,5,5,0.35);padding:0 4px;}
+@keyframes marquee{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+ 
+/* ── LEISTUNGEN ── */
+.leistungen{background:var(--black);padding:96px 0 0;}
+.section-header{padding:0 52px;margin-bottom:52px;}
+.section-tag{font-size:10px;letter-spacing:0.45em;text-transform:uppercase;color:rgba(240,239,237,0.45);margin-bottom:10px;display:flex;align-items:center;gap:10px;}
+.section-tag::before{content:'';width:20px;height:2px;background:var(--red);}
+.section-h{font-family:'Barlow Condensed',sans-serif;font-size:clamp(44px,6vw,74px);font-weight:900;text-transform:uppercase;letter-spacing:0.01em;color:var(--white);line-height:0.88;}
+ 
+/* PHOTO GRID */
+.l-grid{display:grid;grid-template-columns:1fr 1fr 1fr;grid-template-rows:290px 290px;gap:2px;}
+.l-item{position:relative;overflow:hidden;}
+.l-item:nth-child(1){grid-column:1/2;grid-row:1/3;}
+.l-item:nth-child(2){grid-column:2/3;grid-row:1/2;}
+.l-item:nth-child(3){grid-column:3/4;grid-row:1/2;}
+.l-item:nth-child(4){grid-column:2/3;grid-row:2/3;}
+.l-item:nth-child(5){grid-column:3/4;grid-row:2/3;}
+.l-extra{display:flex;gap:2px;margin-top:2px;}
+.l-extra-item{flex:1;background:var(--black3);padding:16px 20px;display:flex;align-items:center;gap:10px;border-top:2px solid rgba(190,26,26,0.1);transition:background 0.3s,border-color 0.3s;}
+.l-extra-item:hover{background:var(--black4);border-color:rgba(190,26,26,0.3);}
+.l-extra-dot{width:4px;height:4px;border-radius:50%;background:var(--red);flex-shrink:0;opacity:0.55;}
+.l-extra-name{font-family:"Barlow Condensed",sans-serif;font-size:16px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--white2);}
+.l-img,.l-ph{width:100%;height:100%;object-fit:cover;transition:filter 0.5s,transform 0.7s;}
+.l-ph{display:flex;align-items:center;justify-content:center;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.08);background:var(--black3);}
+.l-item:hover .l-img{filter:brightness(0.75);transform:scale(1.04);}
+.l-img{filter:brightness(0.45) saturate(0.7);}
+.l-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(5,5,5,0.88) 0%,rgba(5,5,5,0.05) 55%);transition:background 0.4s;}
+.l-item:hover .l-overlay{background:linear-gradient(to top,rgba(190,26,26,0.75) 0%,rgba(5,5,5,0.15) 55%);}
+.l-border{position:absolute;inset:0;border:0px solid var(--red);transition:border-width 0.3s;}
+.l-item:hover .l-border{border-width:2px;}
+.l-content{position:absolute;bottom:0;left:0;right:0;padding:22px 20px;transform:translateY(4px);transition:transform 0.3s;}
+.l-item:hover .l-content{transform:translateY(0);}
+.l-name{font-family:'Barlow Condensed',sans-serif;font-size:clamp(17px,2vw,24px);font-weight:800;text-transform:uppercase;letter-spacing:0.06em;color:var(--white);line-height:1.1;margin-bottom:5px;}
+.l-desc{font-size:12px;color:rgba(240,239,237,0.55);line-height:1.55;max-height:0;overflow:hidden;transition:max-height 0.4s,opacity 0.35s;opacity:0;}
+.l-item:hover .l-desc{max-height:60px;opacity:1;}
+/* bottom red line grows on hover */
+.l-item::after{content:'';position:absolute;bottom:0;left:0;width:0;height:2px;background:var(--red);transition:width 0.45s;z-index:3;}
+.l-item:hover::after{width:100%;}
+ 
+/* ── REFERENZEN ── */
+.referenzen{background:var(--black2);padding:44px 52px;border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
+.ref-label{font-size:9px;letter-spacing:0.4em;text-transform:uppercase;color:rgba(240,239,237,0.2);margin-bottom:24px;text-align:center;}
+.ref-logos{display:flex;gap:48px;align-items:center;justify-content:center;flex-wrap:wrap;}
+.ref-item{font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:rgba(240,239,237,0.18);transition:color 0.3s;cursor:default;}
+.ref-item:hover{color:rgba(240,239,237,0.55);}
+ 
+/* ── FAKTEN ── */
+.fakten{background:var(--black3);padding:72px 52px;display:grid;grid-template-columns:repeat(4,1fr);gap:0;}
+.fakt{padding:28px 24px;border-right:1px solid var(--border);position:relative;overflow:hidden;transition:background 0.35s;}
+.fakt:last-child{border-right:none;}
+.fakt::before{content:'';position:absolute;top:0;left:0;width:2px;height:0;background:var(--red);transition:height 0.4s;}
+.fakt:hover::before{height:100%;}
+.fakt:hover{background:var(--red-dim);}
+.fakt-num{font-family:'Barlow Condensed',sans-serif;font-size:50px;font-weight:900;color:var(--white);line-height:1;letter-spacing:0.02em;}
+.fakt-label{font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--white2);margin-top:5px;}
+ 
+/* ── KONTAKT ── */
+.kontakt{background:var(--black);padding:96px 52px;}
+.kontakt-inner{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start;}
+.kontakt-left{}
+.kontakt-h{font-family:'Barlow Condensed',sans-serif;font-size:clamp(40px,5vw,66px);font-weight:900;text-transform:uppercase;letter-spacing:0.01em;color:var(--white);line-height:0.88;margin-bottom:20px;}
+.kontakt-h em{font-style:normal;color:var(--red);}
+.kontakt-body{font-size:14px;color:var(--white2);line-height:1.8;margin-bottom:32px;}
+.kontakt-details{display:flex;flex-direction:column;gap:12px;margin-bottom:32px;}
+.kd{display:flex;gap:14px;}
+.kd-label{font-size:9px;letter-spacing:0.25em;text-transform:uppercase;color:var(--red);width:68px;flex-shrink:0;padding-top:2px;}
+.kd-value{font-size:14px;color:var(--white2);line-height:1.5;}
+.kd-value a{color:var(--white2);text-decoration:none;transition:color 0.25s;}
+.kd-value a:hover{color:var(--white);}
+.kontakt-ctas{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:28px;}
+ 
+/* orange only for main call CTA */
+.btn-call{background:var(--red);color:var(--white);text-decoration:none;font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;padding:15px 32px;transition:background 0.25s;display:inline-block;}
+.btn-call:hover{background:var(--red2);}
+.btn-mail{background:var(--black3);color:var(--white);text-decoration:none;font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;padding:15px 32px;border:1px solid var(--border);transition:all 0.25s;display:inline-block;}
+.btn-mail:hover{border-color:rgba(240,239,237,0.3);background:var(--black4);}
+ 
+.map-wrap{width:100%;height:260px;overflow:hidden;border:1px solid var(--border);}
+.map-wrap iframe{width:100%;height:100%;border:none;filter:grayscale(100%) invert(85%) contrast(0.85) brightness(0.9);}
+ 
+.form-wrap{background:var(--black2);padding:36px;border:1px solid var(--border);}
+.form-title{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--white);margin-bottom:22px;}
+.form-title em{font-style:normal;color:var(--red);}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.fg{margin-bottom:12px;}
+.fl{font-size:9px;letter-spacing:0.25em;text-transform:uppercase;color:rgba(240,239,237,0.4);margin-bottom:5px;display:block;}
+.fi{width:100%;background:rgba(240,239,237,0.03);border:1px solid var(--border);color:var(--white);font-family:'Barlow',sans-serif;font-size:14px;padding:11px 13px;outline:none;transition:border-color 0.25s;}
+.fi:focus{border-color:rgba(240,239,237,0.25);}
+.fi::placeholder{color:rgba(240,239,237,0.18);}
+textarea.fi{min-height:78px;resize:none;}
+select.fi{appearance:none;cursor:pointer;}
+.form-submit{width:100%;background:var(--red);color:var(--white);border:none;padding:13px;font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;cursor:pointer;transition:background 0.25s;margin-top:4px;}
+.form-submit:hover{background:var(--red2);}
+ 
+footer{background:var(--black2);padding:22px 52px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;}
+.f-logo{font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;color:rgba(240,239,237,0.18);}
+.f-logo em{font-style:normal;color:rgba(190,26,26,0.4);}
+.f-copy{font-size:9px;letter-spacing:0.08em;color:rgba(240,239,237,0.12);}
+.f-links{display:flex;gap:18px;}
+.f-links a{font-size:9px;letter-spacing:0.12em;color:rgba(240,239,237,0.12);text-decoration:none;transition:color 0.25s;}
+.f-links a:hover{color:rgba(240,239,237,0.4);}
+ 
+/* ── REVEAL ANIMATIONS ── */
+.reveal{opacity:0;transform:translateY(22px);transition:opacity 0.9s,transform 0.9s;}
+.reveal.in{opacity:1;transform:translateY(0);}
+.reveal-l{opacity:0;transform:translateX(-30px);transition:opacity 0.9s,transform 0.9s;}
+.reveal-l.in{opacity:1;transform:translateX(0);}
+.reveal-r{opacity:0;transform:translateX(30px);transition:opacity 0.9s,transform 0.9s;}
+.reveal-r.in{opacity:1;transform:translateX(0);}
+.d1{transition-delay:0.1s;}.d2{transition-delay:0.2s;}.d3{transition-delay:0.3s;}.d4{transition-delay:0.4s;}
+ 
+@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+@keyframes slideUp{from{opacity:0;transform:translateY(18px);}to{opacity:1;transform:translateY(0);}}
+ 
+/* ── RESPONSIVE ── */
+@media(max-width:1024px){
+  nav{padding:0 20px;}.nav-r{display:none;}.burger{display:flex;}
+  .hero-content{left:20px;bottom:120px;}
+  .slide-dots{left:20px;}.slide-num{right:20px;}
+  .l-grid{grid-template-columns:1fr 1fr;grid-template-rows:auto;}
+  .l-item:nth-child(n){grid-column:auto!important;grid-row:auto!important;}
+  .l-extra{flex-wrap:wrap;}
+  .fakten{grid-template-columns:1fr 1fr;padding:52px 20px;}
+  .fakt{border-right:none;border-bottom:1px solid var(--border);}
+  .kontakt{padding:70px 20px;}.kontakt-inner{grid-template-columns:1fr;}
+  .section-header{padding:0 20px;}
+  .referenzen{padding:36px 20px;}
+  footer{padding:16px 20px;flex-direction:column;align-items:flex-start;}
+}
+@media(max-width:600px){
+  .l-grid{grid-template-columns:1fr;}
+  .l-item:nth-child(n){grid-column:1!important;grid-row:auto!important;}
+  .l-extra{flex-direction:column;}
+  .hero-ctas{flex-direction:column;}
+  .form-row{grid-template-columns:1fr;}
+  .fakten{grid-template-columns:1fr 1fr;}
+}
+</style>
+</head>
+<body>
+ 
+<!-- NAV -->
+<nav id="nav">
+  <a href="#" class="nav-logo">Transporte <span>Schwarzhans</span></a>
+  <div class="nav-r">
+    <a href="#leistungen">Leistungen</a>
+    <a href="#kontakt">Kontakt</a>
+    <a href="tel:06641337192" class="nav-call">☎ Jetzt anrufen</a>
+  </div>
+  <button class="burger" id="burger" onclick="toggleMenu()"><span></span><span></span><span></span></button>
+</nav>
+ 
+<div class="mob-menu" id="mobMenu">
+  <a href="#leistungen" onclick="closeMenu()">Leistungen</a>
+  <a href="#kontakt" onclick="closeMenu()">Kontakt</a>
+  <a href="tel:06641337192" class="mob-cta" onclick="closeMenu()">☎ Anrufen</a>
+</div>
+ 
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-topline"></div>
+  <div class="slides" id="slides">
+    <div class="slide active"><div class="slide-ph s1">slide-1.jpg</div></div>
+    <div class="slide"><div class="slide-ph s2">slide-2.jpg</div></div>
+    <div class="slide"><div class="slide-ph s3">slide-3.jpg</div></div>
+    <div class="slide"><div class="slide-ph s4">slide-4.jpg</div></div>
+  </div>
+  <div class="hero-grad"></div>
+  <div class="hero-grad2"></div>
+  <div class="hero-diag"></div>
+ 
+  <div class="hero-content">
+    <div class="hero-eyebrow">Klösterle am Arlberg · Vorarlberg</div>
+    <h1 class="hero-h1">
+      <span class="l1">Wir bewegen</span>
+      <span class="l2">was <em>zählt.</em></span>
+    </h1>
+    <p class="hero-sub">Erdbau · Transporte · Spezialtiefbau · Schneeräumung — Ihr Partner für anspruchsvolle Projekte im Alpenraum.</p>
+    <div class="hero-ctas">
+      <a href="#leistungen" class="btn-red"><span>Unsere Leistungen</span></a>
+      <a href="#kontakt" class="btn-border">Anfrage senden</a>
+    </div>
+  </div>
+ 
+  <div class="slide-dots" id="dots">
+    <div class="dot active" onclick="goToSlide(0)"></div>
+    <div class="dot" onclick="goToSlide(1)"></div>
+    <div class="dot" onclick="goToSlide(2)"></div>
+    <div class="dot" onclick="goToSlide(3)"></div>
+  </div>
+  <div class="slide-num"><b id="current-num">1</b> / 4</div>
+</section>
+ 
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <span class="mi">Erdbau</span><span class="ms">·</span>
+    <span class="mi">Transporte</span><span class="ms">·</span>
+    <span class="mi">Spezialtiefbau</span><span class="ms">·</span>
+    <span class="mi">Schneeräumung 24/7</span><span class="ms">·</span>
+    <span class="mi">Kies & Schüttgut</span><span class="ms">·</span>
+    <span class="mi">Containerdienst</span><span class="ms">·</span>
+    <span class="mi">Kranarbeiten</span><span class="ms">·</span>
+    <span class="mi">Bohrarbeiten</span><span class="ms">·</span>
+    <span class="mi">Arlberg</span><span class="ms">·</span>
+    <span class="mi">Erdbau</span><span class="ms">·</span>
+    <span class="mi">Transporte</span><span class="ms">·</span>
+    <span class="mi">Spezialtiefbau</span><span class="ms">·</span>
+    <span class="mi">Schneeräumung 24/7</span><span class="ms">·</span>
+    <span class="mi">Kies & Schüttgut</span><span class="ms">·</span>
+    <span class="mi">Containerdienst</span><span class="ms">·</span>
+    <span class="mi">Kranarbeiten</span><span class="ms">·</span>
+    <span class="mi">Bohrarbeiten</span><span class="ms">·</span>
+    <span class="mi">Arlberg</span><span class="ms">·</span>
+  </div>
+</div>
+ 
+<!-- LEISTUNGEN -->
+<section class="leistungen" id="leistungen">
+  <div class="section-header reveal">
+    <div class="section-tag">Was wir leisten</div>
+    <h2 class="section-h">Leistungen &<br>Kompetenzen</h2>
+  </div>
+  <div class="l-grid">
+    <div class="l-item">
+      <div class="l-ph s1">leistung-erdbau.jpg</div>
+      <div class="l-overlay"></div><div class="l-border"></div>
+      <div class="l-content"><div class="l-name">Erdbau</div><div class="l-desc">Aushub, Geländegestaltung, Hangsicherung — auch unter schwierigsten Bedingungen.</div></div>
+    </div>
+    <div class="l-item">
+      <div class="l-ph s2">leistung-transporte.jpg</div>
+      <div class="l-overlay"></div><div class="l-border"></div>
+      <div class="l-content"><div class="l-name">Transporte</div><div class="l-desc">Schwer- und Spezialtransporte, regionale und überregionale Logistik.</div></div>
+    </div>
+    <div class="l-item">
+      <div class="l-ph s3">leistung-schnee.jpg</div>
+      <div class="l-overlay"></div><div class="l-border"></div>
+      <div class="l-content"><div class="l-name">Schneeräumung</div><div class="l-desc">24/7 Winterdienst — Straßen, Parkplätze und Zufahrten jederzeit frei.</div></div>
+    </div>
+    <div class="l-item">
+      <div class="l-ph s4">leistung-tiefbau.jpg</div>
+      <div class="l-overlay"></div><div class="l-border"></div>
+      <div class="l-content"><div class="l-name">Spezialtiefbau</div><div class="l-desc">Bohr-Ankerungen, Tunnelbau — Einsätze für Implenia, Swietelsky und weitere.</div></div>
+    </div>
+    <div class="l-item">
+      <div class="l-ph s1">leistung-kran.jpg</div>
+      <div class="l-overlay"></div><div class="l-border"></div>
+      <div class="l-content"><div class="l-name">Kranarbeiten</div><div class="l-desc">Hebearbeiten und Kranmontagen für Baustellen und Industrie.</div></div>
+    </div>
+  </div>
+  <div class="l-extra">
+    <div class="l-extra-item"><div class="l-extra-dot"></div><div class="l-extra-name">Kies &amp; Schüttgut</div></div>
+    <div class="l-extra-item"><div class="l-extra-dot"></div><div class="l-extra-name">Containerdienst</div></div>
+    <div class="l-extra-item"><div class="l-extra-dot"></div><div class="l-extra-name">Bohrarbeiten</div></div>
+  </div>
+</section>
+ 
+<!-- REFERENZEN -->
+<div class="referenzen reveal">
+  <div class="ref-label">Partner & Auftraggeber</div>
+  <div class="ref-logos">
+    <span class="ref-item">Implenia</span>
+    <span class="ref-item">Swietelsky</span>
+    <span class="ref-item">Strabag</span>
+    <span class="ref-item">Bergbahnen Stuben</span>
+    <span class="ref-item">Ski Zürs</span>
+    <span class="ref-item">TIWAG</span>
+  </div>
+</div>
+ 
+<!-- FAKTEN -->
+<div class="fakten">
+  <div class="fakt reveal"><div class="fakt-num">24/7</div><div class="fakt-label">Erreichbarkeit</div></div>
+  <div class="fakt reveal d1"><div class="fakt-num">30+</div><div class="fakt-label">Jahre Erfahrung</div></div>
+  <div class="fakt reveal d2"><div class="fakt-num">8</div><div class="fakt-label">Leistungsbereiche</div></div>
+  <div class="fakt reveal d3"><div class="fakt-num">Arlberg</div><div class="fakt-label">Heimat & Einsatzgebiet</div></div>
+</div>
+ 
+<!-- KONTAKT -->
+<section class="kontakt" id="kontakt">
+  <div class="kontakt-inner">
+    <div class="kontakt-left">
+      <div class="section-tag reveal">Kontakt</div>
+      <h2 class="kontakt-h reveal d1">Bereit wenn<br>Sie es <em>sind.</em></h2>
+      <p class="kontakt-body reveal d2">Rufen Sie uns direkt an oder schicken Sie uns eine Anfrage. Wir melden uns umgehend — auch außerhalb der Geschäftszeiten.</p>
+      <div class="kontakt-details reveal d2">
+        <div class="kd"><div class="kd-label">Adresse</div><div class="kd-value">Bundesstraße 27, 6754 Klösterle am Arlberg</div></div>
+        <div class="kd"><div class="kd-label">Telefon</div><div class="kd-value"><a href="tel:06641337192">0664 1337192</a></div></div>
+        <div class="kd"><div class="kd-label">E-Mail</div><div class="kd-value"><a href="mailto:office@arlberg-truck.at">office@arlberg-truck.at</a></div></div>
+        <div class="kd"><div class="kd-label">Öffnung</div><div class="kd-value">Durchgehend geöffnet</div></div>
+      </div>
+      <div class="kontakt-ctas reveal d3">
+        <a href="tel:06641337192" class="btn-call">☎ Jetzt anrufen</a>
+        <a href="mailto:office@arlberg-truck.at" class="btn-mail">✉ E-Mail</a>
+      </div>
+      <div class="map-wrap reveal d3">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2716.8!2d10.0786!3d47.1447!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x479c6e5a5a5a5a5b%3A0x0!2sBundesstra%C3%9Fe+27%2C+6754+Kl%C3%B6sterle%2C+Austria!5e0!3m2!1sde!2sat!4v1" allowfullscreen="" loading="lazy"></iframe>
+      </div>
+    </div>
+    <div class="form-wrap reveal-r">
+      <div class="form-title">Anfrage <em>senden</em></div>
+      <div class="form-row">
+        <div class="fg"><label class="fl">Vorname</label><input type="text" class="fi" placeholder="Ihr Vorname"></div>
+        <div class="fg"><label class="fl">Nachname</label><input type="text" class="fi" placeholder="Ihr Nachname"></div>
+      </div>
+      <div class="fg"><label class="fl">Telefon</label><input type="tel" class="fi" placeholder="+43 ..."></div>
+      <div class="fg"><label class="fl">E-Mail</label><input type="email" class="fi" placeholder="ihre@email.at"></div>
+      <div class="fg">
+        <label class="fl">Leistung</label>
+        <select class="fi">
+          <option>Erdbau</option>
+          <option>Transporte</option>
+          <option>Schneeräumung</option>
+          <option>Kies & Schüttgut</option>
+          <option>Containerdienst</option>
+          <option>Spezialtiefbau</option>
+          <option>Kranarbeiten</option>
+          <option>Bohrarbeiten</option>
+          <option>Sonstiges</option>
+        </select>
+      </div>
+      <div class="fg"><label class="fl">Ihre Anfrage</label><textarea class="fi" placeholder="Beschreiben Sie Ihr Projekt oder Anliegen..."></textarea></div>
+      <button class="form-submit">Anfrage absenden →</button>
+    </div>
+  </div>
+</section>
+ 
+<footer>
+  <div class="f-logo">Transporte <em>Schwarzhans</em></div>
+  <div class="f-copy">© 2026 Transporte Schwarzhans · Klösterle am Arlberg · arlberg-truck.at</div>
+  <div class="f-links"><a href="#">Impressum</a><a href="#">Datenschutz</a></div>
+</footer>
+ 
+<script>
+// NAV
+window.addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('solid',scrollY>60));
+ 
+// SLIDESHOW
+let cur=0;
+const slides=document.querySelectorAll('.slide');
+const dots=document.querySelectorAll('.dot');
+function goToSlide(n){
+  slides[cur].classList.remove('active');
+  dots[cur].classList.remove('active');
+  cur=n;
+  slides[cur].classList.add('active');
+  dots[cur].classList.add('active');
+  document.getElementById('current-num').textContent=cur+1;
+}
+let timer=setInterval(()=>goToSlide((cur+1)%4),5500);
+dots.forEach((d,i)=>d.addEventListener('click',()=>{clearInterval(timer);goToSlide(i);timer=setInterval(()=>goToSlide((cur+1)%4),5500);}));
+ 
+// REVEAL
+const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');obs.unobserve(e.target);}}),{threshold:0.07});
+document.querySelectorAll('.reveal,.reveal-l,.reveal-r').forEach(r=>obs.observe(r));
+ 
+// MOBILE MENU
+function toggleMenu(){document.getElementById('burger').classList.toggle('open');document.getElementById('mobMenu').classList.toggle('open');document.body.style.overflow=document.getElementById('mobMenu').classList.contains('open')?'hidden':'';}
+function closeMenu(){document.getElementById('burger').classList.remove('open');document.getElementById('mobMenu').classList.remove('open');document.body.style.overflow='';}
+</script>
+</body>
+</html>
